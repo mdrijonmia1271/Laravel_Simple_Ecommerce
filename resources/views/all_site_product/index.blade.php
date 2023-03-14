@@ -50,6 +50,7 @@
                                                 <th scope="col">Packet Name</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Create Date</th>
+                                                <th scope="col">Price</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -67,13 +68,30 @@
                                                     <td>{{ $allProduct->sizes->size_name }}</td>
                                                     <td>{{ $allProduct->packets->packet_name }}</td>
                                                     <td>{{ $allProduct->quantity }}</td>
-                                                    <td>{{ $allProduct->create_date }}</td>
+                                                    {{-- <td>{{ $allProduct->create_date->format('d/m/Y') }}</td> --}}
+                                                    <td>{{ Carbon\Carbon::parse($allProduct->create_date)->format('d/m/Y') }}
+                                                    </td>
+                                                    <form action="{{  $allProduct->price ? url('product/price/'.$allProduct->price->id) : url('product/price') }}" method="post">
+                                                        @csrf
+                                                        <td>
+                                                            <input name="product_price" type="text" required value="{{ $allProduct->price ? $allProduct->price->product_price : ""  }}">
+                                                            <input name="product_id" value="{{ $allProduct->id }}" type="hidden">
+                                                            @if ($allProduct->price)
+                                                            <button type="submit" name="submit"
+                                                            class="btn btn-sm btn-outline-primary">Update</button>
+                                                            @else
+                                                            <button type="submit" name="submit"
+                                                            class="btn btn-sm btn-outline-primary">Add</button>
+                                                            @endif                   
+                                                        </td>
+                                                    </form>
                                                     <td>
-                                                        <a href="{{ url('product/edit/' . $allProduct->id) }}" type="button"
-                                                            class="btn btn-sm btn-outline-primary">Edit</a>
+                                                        <a href="{{ url('product/edit/' . $allProduct->id) }}"
+                                                            type="button" class="btn btn-sm btn-outline-primary">Edit</a>
                                                         <a href="{{ url('product/delete/' . $allProduct->id) }}"
                                                             onclick="return confirm('Are you sure to delete')"
                                                             type="button" class="btn btn-sm btn-outline-danger">Delete</a>
+
                                                         {{-- <a href="{{ route('deleteCategory', $row->id) }}" onclick="return confirm('Are you sure to delete')" type="button" class="btn btn-sm btn-outline-danger">Delete</a> --}}
                                                     </td>
                                                 </tr>

@@ -41,4 +41,9 @@ class AllProduct extends Model
     {
         return $this->belongsTo(Packet::class, 'packet_id');
     }
+    public function price()
+    {
+        return $this->hasOne(ProductPrice::class, 'product_id');
+    }
+
 }

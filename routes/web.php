@@ -4,6 +4,8 @@ use App\Http\Controllers\AllProductController;
 use App\Http\Controllers\CategoryControllerCopy;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\PacketController;
+use App\Http\Controllers\ProductPrice;
+use App\Http\Controllers\ProductPriceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryControllerCopy;
@@ -82,5 +84,9 @@ Route::post('add/productForm', [AllProductController::class, 'store'])->name('ad
 Route::get('product/edit/{id}', [AllProductController::class, 'edit']);
 Route::post('product/update/{id}', [AllProductController::class, 'update']);
 Route::get('product/delete/{id}', [AllProductController::class, 'detele']);
+
+
+Route::post('product/price',[ProductPriceController::class, 'create']);
+Route::post('product/price/{id}', [ProductPriceController::class, 'update']);
 
 require __DIR__.'/auth.php';
